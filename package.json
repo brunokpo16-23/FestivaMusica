@@ -4,7 +4,9 @@
   "description": "Proyecto Festival Musical UDEMY con Gulp, SASS y HTML",
   "main": "index.js",
   "scripts": {
-    "sass": "sass --watch src/scss:build/css"
+    "sass": "sass --watch src/scss:build/css",
+    "tarea": "gulp tarea",
+    "css": "gulp css"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,8 @@
   "homepage": "https://github.com/brunokpo16-23/FestivalMusica#readme",
   "devDependencies": {
     "gulp": "^5.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^5.1.0",
     "sass": "^1.72.0"
   }
 }

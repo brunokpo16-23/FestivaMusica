@@ -1,5 +1,2 @@
-$rojo: #f00;
-
-body {
-    background-color: $rojo;
-}
+@use "base";
+@use "layout";
