@@ -1,4 +1,4 @@
-@use "variables" as v;
+@use "variables"as v;
 
 
 html {
@@ -13,8 +13,16 @@ html {
 }
 
 body {
-font-family: v.$fuente_principal;
-font-size: 1.6rem;
+    font-family: v.$fuente_principal;
+    font-size: 1.6rem;
+
+    &.fijar-body {
+        overflow: hidden;
+    }
+
+    &.body-scroll {
+        padding-top: 8.6rem;
+    }
 }
 
 p {
@@ -33,18 +41,24 @@ a {
     text-decoration: none;
 }
 
-h1,h2,h3 {
+h1,
+h2,
+h3 {
     margin: 0 0 5rem 0;
 }
+
 h1 {
     font-size: 4rem;
 }
+
 h2 {
     font-size: 3.6rem;
 }
+
 h3 {
     font-size: 3rem;
 }
+
 img {
     max-width: 100%;
     width: 100%;

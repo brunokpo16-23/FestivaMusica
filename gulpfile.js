@@ -8,6 +8,9 @@ const {
 //CSS
 const sass = require("gulp-sass")(require("sass"));
 const plumber = require("gulp-plumber");
+const autoprefixer = require("autoprefixer");
+const cssnano = require("cssnano");
+const postcss = require("gulp-postcss");
 
 //Imágenes
 const cache = require("gulp-cache");
@@ -19,7 +22,8 @@ function css(done) {
   src("src/scss/**/*.scss") // Identificar en archivo SASS
     .pipe(plumber())
     .pipe(sass()) // Compilar
-    .pipe(dest("build/css")) // Almacenarla en el disco duro
+    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(dest("build/css")); // Almacenarla en el disco duro
   done(); // Callback que avisa a gulp cuando llegamos al final
 }
 
@@ -58,15 +62,24 @@ function versionAvif(done) {
   done();
 }
 
+function javascript(done) {
+  src("src/js/**/*.js")
+    .pipe(dest("build/js"));
+
+  done();
+}
+
 
 
 function dev(done) {
-  watch("src/scss/**/*.scss", css)
+  watch("src/scss/**/*.scss", css);
+  watch("src/js/**/*.js", javascript);
   done();
 }
 
 exports.css = css;
+exports.js = javascript;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.dev = parallel(imagenes, versionWebp, versionAvif, dev);
+exports.dev = parallel(css,imagenes, versionWebp, versionAvif, javascript, dev);
