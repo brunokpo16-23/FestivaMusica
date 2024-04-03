@@ -1,93 +1,55 @@
-document.addEventListener("DOMContentLoaded", function () {
-    iniciarApp();
-});
-
 function iniciarApp() {
-    navegacionFija();
-    crearGaleria();
-    scrollNav();
+    navegacionFija(), crearGaleria(), scrollNav()
 }
 
 function navegacionFija() {
-    const barra = document.querySelector(".header");
-    const sobreFestival = document.querySelector(".sobre-festival");
-    const body = document.querySelector("body");
-
-    window.addEventListener("scroll", function () {
-        if (sobreFestival.getBoundingClientRect().top < 0) {
-            barra.classList.add("fijo");
-            body.classList.add("body-scroll");
-        } else {
-            barra.classList.remove("fijo")
-            body.classList.remove("body-scroll")
-        }
-    })
+    const e = document.querySelector(".header"),
+        t = document.querySelector(".sobre-festival"),
+        n = document.querySelector("body");
+    window.addEventListener("scroll", (function () {
+        t.getBoundingClientRect().top < 0 ? (e.classList.add("fijo"), n.classList.add("body-scroll")) : (e.classList.remove("fijo"), n.classList.remove("body-scroll"))
+    }))
 }
 
 function scrollNav() {
-    const enlaces = document.querySelectorAll(".sobre-festival");
+    const enlaces = document.querySelectorAll(".sobre-festival a");
+
     enlaces.forEach(enlace => {
-        enlace.addEventListener("click", function (e) {
+        enlace.addEventListener("click",function(e) {
             e.preventDefault();
 
             const seccionScroll = e.target.attributes.href.value;
             const seccion = document.querySelector(seccionScroll);
-            seccion.scrollIntoView({
-                behavior: "smooth"
-            });
-        })
+            seccion.scrolIntoView({ behavir: "smooth"});
+        });
     });
 }
 
 function crearGaleria() {
-    const galeria = document.querySelector(".galeria-imagenes")
-
-    for (let i = 1; i <= 12; i++) {
-        const imagen = document.createElement('picture');
-        imagen.innerHTML = `
-            <source srcset="build/img/thumb/${i}.avif" type="image/avif">
-            <source srcset="build/img/thumb/${i}.webp" type="image/webp">
-            <img loading="lazy" width="200" height="300" src="build/img/thumb/${i}.jpg" alt="imagen galeria">
-        `;
-        imagen.onclick = function () {
-            mostrarImagen(i);
-        }
-
-        galeria.appendChild(imagen);
+    const e = document.querySelector(".galeria-imagenes");
+    for (let t = 1; t <= 12; t++) {
+        const n = document.createElement("picture");
+        n.innerHTML = `\n            <source srcset="build/img/thumb/${t}.avif" type="image/avif">\n            <source srcset="build/img/thumb/${t}.webp" type="image/webp">\n            <img loading="lazy" width="200" height="300" src="build/img/thumb/${t}.jpg" alt="imagen galeria">\n        `, n.onclick = function () {
+            mostrarImagen(t)
+        }, e.appendChild(n)
     }
-};
-
-function mostrarImagen(id) {
-    const imagen = document.createElement('picture');
-    imagen.innerHTML = `
-            <source srcset="build/img/grande/${id}.avif" type="image/avif">
-            <source srcset="build/img/grande/${id}.webp" type="image/webp">
-            <img loading="lazy" width="200" height="300" src="build/img/grande/${id}.jpg" alt="imagen galeria">
-        `;
-
-    //Crea el OverLay con la imagen 
-    const overLay = document.createElement("DIV");
-    overLay.appendChild(imagen);
-    overLay.classList.add("overlay");
-    overLay.onclick = function () {
-        const body = document.querySelector("body");
-        body.classList.remove("fijar-body");
-        overLay.remove();
-    }
-    //Botón para cerrar la ventana
-    const cerrarModal = document.createElement("P");
-    cerrarModal.textContent = "X";
-    cerrarModal.classList.add("btn-cerrar");
-    cerrarModal.onclick = function () {
-        const body = document.querySelector("body");
-        body.classList.remove("fijar-body");
-        overLay.remove();
-    };
-
-    overLay.appendChild(cerrarModal);
-
-    //Añadirlo al HTML
-    const body = document.querySelector("body");
-    body.appendChild(overLay);
-    body.classList.add("fijar-body");
 }
+
+function mostrarImagen(e) {
+    const t = document.createElement("picture");
+    t.innerHTML = `\n            <source srcset="build/img/grande/${e}.avif" type="image/avif">\n            <source srcset="build/img/grande/${e}.webp" type="image/webp">\n            <img loading="lazy" width="200" height="300" src="build/img/grande/${e}.jpg" alt="imagen galeria">\n        `;
+    const n = document.createElement("DIV");
+    n.appendChild(t), n.classList.add("overlay"), n.onclick = function () {
+        document.querySelector("body").classList.remove("fijar-body"), n.remove()
+    };
+    const i = document.createElement("P");
+    i.textContent = "X", i.classList.add("btn-cerrar"), i.onclick = function () {
+        document.querySelector("body").classList.remove("fijar-body"), n.remove()
+    }, n.appendChild(i);
+    const o = document.querySelector("body");
+    o.appendChild(n), o.classList.add("fijar-body")
+}
+document.addEventListener("DOMContentLoaded", (function () {
+    iniciarApp()
+}));
+//# sourceMappingURL=app.js.map

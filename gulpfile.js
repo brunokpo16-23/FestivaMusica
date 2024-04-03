@@ -11,6 +11,7 @@ const plumber = require("gulp-plumber");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const postcss = require("gulp-postcss");
+const soursemaps = require("gulp-sourcemaps");
 
 //Imágenes
 const cache = require("gulp-cache");
@@ -18,11 +19,16 @@ const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
 const avif = require("gulp-avif");
 
+// javascript
+const tercer = require("gulp-terser-js");
+
 function css(done) {
   src("src/scss/**/*.scss") // Identificar en archivo SASS
+    .pipe(soursemaps.init())
     .pipe(plumber())
     .pipe(sass()) // Compilar
     .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(soursemaps.write("."))
     .pipe(dest("build/css")); // Almacenarla en el disco duro
   done(); // Callback que avisa a gulp cuando llegamos al final
 }
@@ -64,7 +70,10 @@ function versionAvif(done) {
 
 function javascript(done) {
   src("src/js/**/*.js")
-    .pipe(dest("build/js"));
+    .pipe(soursemaps.init())
+    .pipe(tercer())
+    .pipe(soursemaps.write("."))
+    .pipe(dest("build/js"))
 
   done();
 }
@@ -82,4 +91,4 @@ exports.js = javascript;
 exports.imagenes = imagenes;
 exports.versionWebp = versionWebp;
 exports.versionAvif = versionAvif;
-exports.dev = parallel(css,imagenes, versionWebp, versionAvif, javascript, dev);
+exports.dev = parallel(css, imagenes, versionWebp, versionAvif, javascript, dev);
